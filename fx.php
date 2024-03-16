@@ -3,10 +3,9 @@
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/bosunia/shell/main/style.css">
 <title>File Management</title>
-<style>
-  <link rel="stylesheet" href="https://raw.githubusercontent.com/bosunia/shell/main/style.css">
-</style>
+
 </head>
 <body>
 
