@@ -5,7 +5,7 @@
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <title>File Management</title>
 <style>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bosunia/shell/main/style.css">
 </style>
 </head>
 <body>
