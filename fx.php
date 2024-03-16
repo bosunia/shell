@@ -5,51 +5,7 @@
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <title>File Management</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f7f7f7;
-    }
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    form {
-        margin-bottom: 20px;
-    }
-    input[type='file'] {
-        margin-bottom: 10px;
-    }
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    ul li {
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        transition: background-color 0.3s ease;
-    }
-    ul li:hover {
-        background-color: #e0e0e0;
-    }
-    a {
-        text-decoration: none;
-        color: #0366d6;
-        transition: color 0.3s ease;
-    }
-    a:hover {
-        color: #004080;
-    }
-    h2 {
-        margin-top: 0;
-    }
+  <link rel="stylesheet" href="styles.css">
 </style>
 </head>
 <body>
